@@ -1,0 +1,101 @@
+version: "2.0"
+stories:
+
+- story: check_order_status
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - intent: order_status
+  - action: utter_order_status
+
+- story: cancel_order_success
+  steps:
+  - intent: order_status
+  - action: utter_order_status
+  - intent: order_cancel
+  - action: utter_order_cancel_confirm
+  - intent: affirm
+  - action: utter_order_cancel_finish
+
+- story: cancel_order_failure
+  steps:
+  - intent: order_status
+  - action: utter_order_status
+  - intent: order_cancel
+  - action: utter_order_cancel_confirm
+  - intent: deny
+  - action: utter_happy
+
+- story: buy_products
+  steps:
+  - intent: order_product
+  - action: utter_order_item
+
+- story: return_product_success
+  steps:
+  - intent: return
+  - action: utter_return_confirm
+  - intent: affirm
+  - action: utter_return_finish
+
+- story: return_product_failure
+  steps:
+  - intent: return
+  - action: utter_return_confirm
+  - intent: deny
+  - action: utter_happy
+
+
+
+
+- story: credit_card_successful_sell
+  steps:
+  - intent: credit_card_info
+  - action: utter_credit_promotion
+  - intent: affirm
+  - action: utter_credit_success_forward
+
+- story: credit_card_unsuccessful_sell
+  steps:
+  - intent: credit_card_info
+  - action: utter_credit_promotion
+  - intent: deny
+  - action: utter_credit_unsuccessful
+
+- story: pending_bill_reason
+  steps:
+  - action: pending_bill_response
+  - active_loop: pending_bill_response
+  - slot_was_set:
+    - requested_slot: bill_due_response
+  - slot_was_set:
+    - bill_due_response: I am low on money 
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_due_bill_response_saved
+
+
+
+- story: Demo_story
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - intent: return
+  - action: utter_return_confirm
+  - intent: affirm
+  - action: utter_return_finish
+  - intent: affirm
+  - action: utter_choose_payment_option
+  - intent: choosen_payment_choice
+  - action: utter_credit_promotion
+  - intent: affirm
+  - action: utter_happy
+  - action: utter_offers
+  - intent: affirm
+  - action: action_recommended_product
+  - intent: affirm
+  - action: utter_order_item
+
